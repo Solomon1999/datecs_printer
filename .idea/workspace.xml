@@ -22,11 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e3246d0-faab-446a-be26-36e6ed5206c0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/android/libs/com.datecs.api.jar" beforeDir="false" afterPath="$PROJECT_DIR$/android/libs/com.datecs.api.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/libs/com.datecs.api2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/datecs_printer/DatecsPrinterPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/datecs_printer/DatecsPrinterPlugin.java" afterDir="false" />
-    </list>
+    <list default="true" id="0e3246d0-faab-446a-be26-36e6ed5206c0" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

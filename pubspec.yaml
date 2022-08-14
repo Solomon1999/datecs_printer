@@ -27,7 +27,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.rezins.datecs_printer
+        package: com.datecs_printer
         pluginClass: DatecsPrinterPlugin
       ios:
         pluginClass: DatecsPrinterPlugin

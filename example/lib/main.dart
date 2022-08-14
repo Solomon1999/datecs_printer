@@ -21,7 +21,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  List availableBluetoothDevices =[];
+  List availableBluetoothDevices = [];
   DatecsDevice? _device;
   bool connected = false;
 
@@ -37,8 +37,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await DatecsPrinter.platformVersion ?? 'Unknown platform version';
+      platformVersion = await DatecsPrinter.platformVersion;
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -53,141 +52,145 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Future<List<String>> getTicketDatecs({bool withImage = false}) async{
-    final generate = DatecsGenerate(DatecsPaper.mm80);
+  Future<List<String>> getTicketDatecs({bool withImage = false}) async {
+    final generate = DatecsGenerate(DatecsPaper.mm58);
 
-    if(withImage){
+    if (withImage) {
       ByteData bytes = await rootBundle.load('assets/empty-box.png');
       var buffer = bytes.buffer;
       var m = base64Encode(Uint8List.view(buffer));
 
-      generate.image(m);
+      ByteData bytes2 = await rootBundle.load('assets/logo2.jpg');
+      var buffer2 = bytes2.buffer;
+      var m2 = base64Encode(Uint8List.view(buffer2));
+
+      generate.image(m2, 250);
+    } else {
+      generate.feed(2);
+      generate.textPrint(
+        "Demo Shop\n",
+        style: DatecsStyle(
+          bold: false,
+          italic: false,
+          underline: false,
+          align: DatecsAlign.center,
+        ),
+      );
+      generate.textPrint(
+          "18th Main Road, 2nd Phase, J. P. Nagar, Bengaluru, Karnataka 560078\n\n",
+          style: DatecsStyle(
+            align: DatecsAlign.center,
+            bold: false,
+            italic: false,
+            underline: false,
+          ));
+      generate.textPrint('Tel: +919591708470\n',
+          style: DatecsStyle(
+            align: DatecsAlign.center,
+            bold: false,
+            italic: false,
+            underline: false,
+          ));
+
+      generate.hr(char: "=");
+
+      generate.row([
+        DatecsColumn(
+            text: 'No',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.left, bold: true)),
+        DatecsColumn(
+            text: 'Item',
+            width: 4,
+            styles: DatecsStyle(align: DatecsAlign.left, bold: true)),
+        DatecsColumn(
+            text: 'Price',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.center, bold: true)),
+        DatecsColumn(
+            text: 'Qty',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.center, bold: true)),
+        DatecsColumn(
+            text: 'Total\n',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.right, bold: true)),
+      ]);
+      generate.hr();
+      generate.row([
+        DatecsColumn(
+            text: '1',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.left, bold: true)),
+        DatecsColumn(
+            text: 'Tea',
+            width: 4,
+            styles: DatecsStyle(align: DatecsAlign.left, bold: true)),
+        DatecsColumn(
+            text: '10',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.center, bold: true)),
+        DatecsColumn(
+            text: '1',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.center, bold: true)),
+        DatecsColumn(
+            text: '10\n',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.right, bold: true)),
+      ]);
+
+      generate.row([
+        DatecsColumn(
+            text: '2',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.left, bold: true)),
+        DatecsColumn(
+            text: 'Sada Dosa',
+            width: 4,
+            styles: DatecsStyle(align: DatecsAlign.left, bold: true)),
+        DatecsColumn(
+            text: '30',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.center, bold: true)),
+        DatecsColumn(
+            text: '1',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.center, bold: true)),
+        DatecsColumn(
+            text: '30\n',
+            width: 1,
+            styles: DatecsStyle(align: DatecsAlign.right, bold: true)),
+      ]);
+      generate.feed(5);
     }
-    generate.feed(2);
-    generate.textPrint("Demo Shop", style: DatecsStyle(
-      bold: false,
-      italic: false,
-      underline: false,
-      align: DatecsAlign.center,
-      size: DatecsSize.high,
-    ),);
-    generate.textPrint(
-        "18th Main Road, 2nd Phase, J. P. Nagar, Bengaluru, Karnataka 560078",
-        style: DatecsStyle(align: DatecsAlign.center,bold: false,
-          italic: false,
-          underline: false,));
-    generate.textPrint('Tel: +919591708470',
-        style: DatecsStyle(align: DatecsAlign.center,bold: false,
-          italic: false,
-          underline: false,));
-
-    generate.hr(char: "=");
-
-    generate.row([
-      DatecsColumn(
-          text: 'No',
-          width: 1,
-          styles: DatecsStyle(align: DatecsAlign.left, bold: true)
-      ),
-      DatecsColumn(
-          text: 'Item',
-          width: 5,
-          styles: DatecsStyle(align: DatecsAlign.left, bold: true)
-      ),
-      DatecsColumn(
-          text: 'Price',
-          width: 2,
-          styles: DatecsStyle(align: DatecsAlign.center, bold: true)
-      ),
-      DatecsColumn(
-          text: 'Qty',
-          width: 2,
-          styles: DatecsStyle(align: DatecsAlign.center, bold: true)
-      ),
-      DatecsColumn(
-          text: 'Total',
-          width: 2,
-          styles: DatecsStyle(align: DatecsAlign.right, bold: true)
-      ),
-
-    ]);
-    generate.hr();
-    generate.row([
-      DatecsColumn(
-          text: '1',
-          width: 1,
-          styles: DatecsStyle(align: DatecsAlign.left, bold: true)
-      ),
-      DatecsColumn(
-          text: 'Tea',
-          width: 5,
-          styles: DatecsStyle(align: DatecsAlign.left, bold: true)
-      ),
-      DatecsColumn(
-          text: '10',
-          width: 2,
-          styles: DatecsStyle(align: DatecsAlign.center, bold: true)
-      ),
-      DatecsColumn(
-          text: '1',
-          width: 2,
-          styles: DatecsStyle(align: DatecsAlign.center, bold: true)
-      ),
-      DatecsColumn(
-          text: '10',
-          width: 2,
-          styles: DatecsStyle(align: DatecsAlign.right, bold: true)
-      ),
-
-    ]);
-
-    generate.row([
-      DatecsColumn(
-          text: '2',
-          width: 1,
-          styles: DatecsStyle(align: DatecsAlign.left, bold: true)
-      ),
-      DatecsColumn(
-          text: 'Sada Dosa',
-          width: 5,
-          styles: DatecsStyle(align: DatecsAlign.left, bold: true)
-      ),
-      DatecsColumn(
-          text: '30',
-          width: 2,
-          styles: DatecsStyle(align: DatecsAlign.center, bold: true)
-      ),
-      DatecsColumn(
-          text: '1',
-          width: 2,
-          styles: DatecsStyle(align: DatecsAlign.center, bold: true)
-      ),
-      DatecsColumn(
-          text: '30',
-          width: 2,
-          styles: DatecsStyle(align: DatecsAlign.right, bold: true)
-      ),
-
-    ]);
-    generate.feed(5);
 
     return generate.args;
   }
 
-  _getListBluetooth()async{
-    List<dynamic> list = await DatecsPrinter.getListBluetoothDevice;
-    List<DatecsDevice> listOfDevice = [];
-    for (var element in list) {
-      var bluetooth = element as Map<dynamic, dynamic>;
-      var name, address;
-      bluetooth.forEach((key, value) {
-        key == "name" ? name = value : address = value;
+  _getListBluetooth() async {
+    try {
+      List<dynamic> list = await DatecsPrinter.getListBluetoothDevice;
+
+      List<DatecsDevice> listOfDevice = [];
+      for (var element in list) {
+        var bluetooth = element as Map<dynamic, dynamic>;
+        var name, address;
+        bluetooth.forEach((key, value) {
+          key == "name" ? name = value : address = value;
+        });
+        listOfDevice.add(DatecsDevice(name, address));
+      }
+      setState(() {
+        availableBluetoothDevices = listOfDevice;
       });
-      listOfDevice.add(DatecsDevice(name, address));
+    } catch (error) {
+      if (error is PlatformException) {
+        Fluttertoast.showToast(
+            msg:
+                "Error getting bluetooth devices. Please ensure your bluetooth is switched on");
+      }
     }
-    setState(() {
-      availableBluetoothDevices = listOfDevice;
-    });
   }
 
   List<DropdownMenuItem<DatecsDevice>> _getDeviceItems() {
@@ -212,14 +215,16 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin Datecs app'),
-        ),
+          appBar: AppBar(
+            title: const Text('Plugin Datecs app'),
+          ),
           body: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -230,7 +235,9 @@ class _MyAppState extends State<MyApp> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 30,),
+                    const SizedBox(
+                      width: 30,
+                    ),
                     Expanded(
                       child: DropdownButton(
                         isExpanded: true,
@@ -243,7 +250,9 @@ class _MyAppState extends State<MyApp> {
                         value: _device,
                       ),
                     ),
-                    const SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     IconButton(
                       color: Theme.of(context).primaryColor,
                       icon: const Icon(Icons.refresh),
@@ -251,23 +260,25 @@ class _MyAppState extends State<MyApp> {
                         _getListBluetooth();
                       },
                     ),
-
                   ],
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 FlatButton(
                   color: Theme.of(context).primaryColor,
                   onPressed: () async {
-                    if(_device == null){
+                    if (_device == null) {
                       Fluttertoast.showToast(msg: "Device not selected");
                       return;
                     }
-                    try{
-                      var result = await DatecsPrinter.connectBluetooth(_device!.address);
-                      if(result){
+                    try {
+                      var result = await DatecsPrinter.connectBluetooth(
+                          _device!.address);
+                      if (result) {
                         Fluttertoast.showToast(msg: "Device connected");
                       }
-                    }catch(e){
+                    } catch (e) {
                       Fluttertoast.showToast(msg: e.toString());
                     }
                   },
@@ -276,58 +287,58 @@ class _MyAppState extends State<MyApp> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                const SizedBox(height: 20,),
-                RawMaterialButton(
-                  fillColor: Colors.blue,
-                  onPressed: () async{
-                    List<String> ticket = await getTicketDatecs(withImage: false);
-                    var result = await DatecsPrinter.printText(ticket);
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      'Test Print ', style: TextStyle(
-                      color: Colors.white
-                    ),
-                    ),
-                  )
+                const SizedBox(
+                  height: 20,
                 ),
-
-                const SizedBox(height: 20,),
                 RawMaterialButton(
                     fillColor: Colors.blue,
-                    onPressed: () async{
-                      List<String> ticket = await getTicketDatecs(withImage: true);
+                    onPressed: () async {
+                      List<String> ticket =
+                          await getTicketDatecs(withImage: false);
                       var result = await DatecsPrinter.printText(ticket);
                     },
                     child: const Padding(
                       padding: EdgeInsets.all(8),
                       child: Text(
-                        'Test Print with Image', style: TextStyle(
-                          color: Colors.white
-                        ),
+                        'Test Print ',
+                        style: TextStyle(color: Colors.white),
                       ),
-                    )
+                    )),
+                const SizedBox(
+                  height: 20,
                 ),
-                const SizedBox(height: 20,),
                 RawMaterialButton(
                     fillColor: Colors.blue,
-                    onPressed: () async{
+                    onPressed: () async {
+                      List<String> ticket =
+                          await getTicketDatecs(withImage: true);
+                      var result = await DatecsPrinter.printText(ticket);
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Text(
+                        'Test Print with Image',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )),
+                const SizedBox(
+                  height: 20,
+                ),
+                RawMaterialButton(
+                    fillColor: Colors.blue,
+                    onPressed: () async {
                       await DatecsPrinter.printTest;
                     },
                     child: const Padding(
                       padding: EdgeInsets.all(8),
                       child: Text(
-                        'Test Print with Default Machine', style: TextStyle(
-                          color: Colors.white
+                        'Test Print with Default Machine',
+                        style: TextStyle(color: Colors.white),
                       ),
-                      ),
-                    )
-                ),
+                    )),
               ],
             ),
-          )
-      ),
+          )),
     );
   }
 }

@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/services.dart';
@@ -10,18 +9,24 @@ class DatecsPrinter {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
+
   static Future<List<dynamic>> get getListBluetoothDevice async {
-    final List<dynamic> list = await _channel.invokeMethod('getListBluetoothDevice');
+    var value = await _channel.invokeMethod('getListBluetoothDevice');
+    print(value);
+    final List<dynamic> list = value;
     return list;
   }
+
   static Future<bool> connectBluetooth(String address) async {
-    try{
-      final bool result = await _channel.invokeMethod('connectBluetooth',{"address":address});
+    try {
+      var value =
+          await _channel.invokeMethod('connectBluetooth', {"address": address});
+      print(value);
+      final bool result = value;
       return result;
-    }catch(e){
+    } catch (e) {
       return false;
     }
-
   }
 
   static Future<void> get printTest async {
@@ -30,21 +35,21 @@ class DatecsPrinter {
   }
 
   static Future<bool> printText(List<String> args) async {
-    try{
-      final bool result = await _channel.invokeMethod('printText',{"args":args});
+    try {
+      final bool result =
+          await _channel.invokeMethod('printText', {"args": args});
       print(result);
       return result;
-    }catch(e){
+    } catch (e) {
       return false;
     }
-
   }
 
-  static Future<bool> get disconnect async{
-    try{
+  static Future<bool> get disconnect async {
+    try {
       final bool result = await _channel.invokeMethod('disconnectBluetooth');
       return Future.value(result);
-    }on PlatformException catch (e) {
+    } on PlatformException catch (e) {
       print("Failed to write bytes: '${e.message}'.");
       return Future.value(false);
     }

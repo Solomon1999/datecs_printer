@@ -26,7 +26,9 @@ class DatecsGenerate {
     String buffer = "";
     buffer += "{reset}";
 
-    if (style.align == DatecsAlign.center) {
+    if (style.align == DatecsAlign.left) {
+      buffer += "{left}";
+    } else if (style.align == DatecsAlign.center) {
       buffer += "{center}";
     } else if (style.align == DatecsAlign.right) {
       buffer += "{right}";

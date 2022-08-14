@@ -48,48 +48,59 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler {
 
   private boolean isConnect = false;
 
-  private final ProtocolAdapter.PrinterListener mChannelListener = new ProtocolAdapter.PrinterListener(){
+  private final ProtocolAdapter.ChannelListener mChannelListener = new ProtocolAdapter.ChannelListener(){
+
+//    @Override
+//    public void onBatteryStateChanged(boolean b) {
+//
+//    }
+//
+//    @Override
+//    public void onThermalHeadStateChanged(boolean b) {
+//
+//    }
+//
+//    @Override
+//    public void onPaperStateChanged(boolean b) {
+//
+//    }
+
     @Override
-    public void onBatteryStateChanged(boolean b) {
+    public void onReadEncryptedCard() {
+      // TODO: onReadEncryptedCard
+    }
+
+    @Override
+    public void onReadCard() {
+      // TODO: onReadCard
+    }
+
+    @Override
+    public void onReadBarcode() {
+      // TODO: onReadBarcode
+    }
+
+    @Override
+    public void onLowBattery(boolean b) {
 
     }
 
     @Override
-    public void onThermalHeadStateChanged(boolean b) {
+    public void onOverHeated(boolean b) {
 
     }
 
     @Override
-    public void onPaperStateChanged(boolean b) {
-
+    public void onPaperReady(boolean state) {
+      if (state) {
+      } else {
+        try {
+          disconnect();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
     }
-
-//    @Override
-//    public void onReadEncryptedCard() {
-//      // TODO: onReadEncryptedCard
-//    }
-//
-//    @Override
-//    public void onReadCard() {
-//      // TODO: onReadCard
-//    }
-//
-//    @Override
-//    public void onReadBarcode() {
-//      // TODO: onReadBarcode
-//    }
-//
-//    @Override
-//    public void onPaperReady(boolean state) {
-//      if (state) {
-//      } else {
-//        try {
-//          disconnect();
-//        } catch (IOException e) {
-//          e.printStackTrace();
-//        }
-//      }
-//    }
   };
 
   @Override
@@ -295,11 +306,11 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler {
       mmSocket.close();
 
       if (mPrinter != null) {
-        mPrinter.close();
+        mPrinter.release();
       }
 
       if (mProtocolAdapter != null) {
-        mProtocolAdapter.close();
+        mProtocolAdapter.release();
       }
 
 

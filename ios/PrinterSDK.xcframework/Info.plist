@@ -3,6 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>AvailableLibraries</key>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Requires Bluetooth Usage</string>
 	<array>
 		<dict>
 			<key>LibraryIdentifier</key>

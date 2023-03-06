@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
@@ -24,6 +27,14 @@
   <component name="ChangeListManager">
     <list default="true" id="0e3246d0-faab-446a-be26-36e6ed5206c0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/datecs_printer/DatecsPrinterPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/datecs_printer/DatecsPrinterPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

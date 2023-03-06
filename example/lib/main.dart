@@ -187,8 +187,7 @@ class _MyAppState extends State<MyApp> {
     } catch (error) {
       if (error is PlatformException) {
         Fluttertoast.showToast(
-            msg:
-                "Error getting bluetooth devices. Please ensure your bluetooth is switched on");
+            msg: error.toString());
       }
     }
   }
@@ -265,8 +264,11 @@ class _MyAppState extends State<MyApp> {
                 const SizedBox(
                   height: 20,
                 ),
-                FlatButton(
-                  color: Theme.of(context).primaryColor,
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    foregroundColor: Colors.white
+                  ),
                   onPressed: () async {
                     if (_device == null) {
                       Fluttertoast.showToast(msg: "Device not selected");

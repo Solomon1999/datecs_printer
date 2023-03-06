@@ -1,15 +1,23 @@
 package com.datecs_printer;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
 import com.datecs.api.printer.Printer;
 import com.datecs.api.printer.ProtocolAdapter;
@@ -26,20 +34,27 @@ import java.util.Set;
 import java.util.UUID;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
+import io.flutter.plugin.common.PluginRegistry;
 
 /** DatecsPrinterPlugin */
-public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler {
+public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
   private MethodChannel channel;
+  private Result result;
 
   private Context mContext;
+  private Activity mActivity;
 
   private Printer mPrinter;
   private ProtocolAdapter mProtocolAdapter;
+
+  private BluetoothManager mBluetoothManager;
   private BluetoothAdapter mBluetoothAdapter;
   private BluetoothSocket mmSocket;
   private BluetoothDevice mmDevice;
@@ -47,6 +62,8 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler {
   private InputStream mmInputStream;
 
   private boolean isConnect = false;
+
+  private final static int REQUEST_ENABLE_BT = 1;
 
   private final ProtocolAdapter.ChannelListener mChannelListener = new ProtocolAdapter.ChannelListener(){
 
@@ -103,22 +120,99 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler {
     }
   };
 
+  /**
+   * This method checks if a runtime permission has been granted.
+   * @param permission The permission to check.
+   * @return <code>TRUE</code> if the permission has been granted, <code>FALSE</code> otherwise.
+   */
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+  private boolean checkPermission(@NonNull String permission){
+    return ActivityCompat.checkSelfPermission(mContext, permission)
+            == PackageManager.PERMISSION_GRANTED;
+  }
+  private void requestRuntimePermissions(
+          @NonNull String title, @NonNull String description,
+          int requestCode, @NonNull String... permissions){
+    if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, permissions[0])) {
+      AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+      builder
+              .setTitle(title)
+              .setMessage(description)
+              .setCancelable(false)
+              .setNegativeButton(android.R.string.no, (dialog, id) -> {
+                //do nothing
+              })
+              .setPositiveButton(
+                      android.R.string.ok,
+                      (dialog, id) -> ActivityCompat.requestPermissions(mActivity, permissions, requestCode));
+      builder.create().show();
+    }
+    else ActivityCompat.requestPermissions(mActivity, permissions, requestCode);
+  }
+
+  void requestEnableBluetooth() {
+    mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    if (mBluetoothAdapter != null && !mBluetoothAdapter.isEnabled()) {
+      Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+      mActivity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+    }
+  }
+
+  void confirmPermissions() {
+    ArrayList<String> deniedPermissions = new ArrayList<>();
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+      if (!checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION))
+        deniedPermissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+      if (!checkPermission(Manifest.permission.ACCESS_FINE_LOCATION))
+        deniedPermissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+    } else {
+        if (!checkPermission(Manifest.permission.BLUETOOTH_SCAN))
+          deniedPermissions.add(Manifest.permission.BLUETOOTH_SCAN);
+        if (!checkPermission(Manifest.permission.BLUETOOTH_CONNECT))
+          deniedPermissions.add(Manifest.permission.BLUETOOTH_CONNECT);
+    }
+
+    if (deniedPermissions.isEmpty()) {
+      if (mBluetoothAdapter == null || mBluetoothAdapter.isEnabled()) //check if bluetooth is enabled
+        requestEnableBluetooth(); //method to request enable bluetooth
+        //        return false;
+    } else {
+        Log.d("Datecs", "Request bluetooth permissions");
+        requestRuntimePermissions(
+                "Bluetooth permissions request",
+                "Bluetooth permissions request rationale",
+                REQUEST_ENABLE_BT,
+                deniedPermissions.toArray(new String[0]));
+        //      return false;
+      }
+  }
+
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
     channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "datecs_printer");
     channel.setMethodCallHandler(this);
+    mContext = flutterPluginBinding.getApplicationContext();
   }
 
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+    this.result = result;
+    confirmPermissions();
     if (call.method.equals("getPlatformVersion")) {
       result.success("Android " + android.os.Build.VERSION.RELEASE);
     } else if (call.method.equals("getListBluetoothDevice")){
 
       // Get the local Bluetooth adapter
-      mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-      ArrayList<Map<String, String>> devices = new ArrayList<Map<String, String>>();
-      if (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+
+      }
+//      mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+      if (mBluetoothAdapter != null) {
+//        if (!mBluetoothAdapter.isEnabled()) {
+//          Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//          mActivity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+//        }
+        ArrayList<Map<String, String>> devices = new ArrayList<Map<String, String>>();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         for (BluetoothDevice device : pairedDevices) {
           Map<String, String> list = new HashMap<String, String>();
@@ -127,13 +221,9 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler {
           devices.add(list);
         }
         result.success(devices);
-
-
-      }else{
-
+      } else{
         result.error("Error 101", "Error while get list bluetooth device","");
       }
-
     }else if (call.method.equals("connectBluetooth")){
       String address = call.argument("address");
       try{
@@ -319,4 +409,31 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler {
     }
   }
 
+  @Override
+  public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+    mActivity = binding.getActivity();
+    binding.addActivityResultListener(this);
+  }
+
+  @Override
+  public void onDetachedFromActivityForConfigChanges() {
+    mActivity = null;
+  }
+
+  @Override
+  public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+    mActivity = binding.getActivity();
+    binding.addActivityResultListener(this);
+  }
+
+  @Override
+  public void onDetachedFromActivity() {
+    mActivity = null;
+  }
+
+  @Override
+  public boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//    Log.d("Datecs", "Intent Data"+data.toString());
+    return false;
+  }
 }

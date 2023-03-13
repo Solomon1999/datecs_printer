@@ -110,8 +110,11 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
     @Override
     public void onPaperReady(boolean state) {
       if (state) {
+        Log.i("DATECS_PRINTER", "Checking on paper ready");
+
       } else {
         try {
+          Log.e("DATECS_PRINTER", "On paper ready failed disconnecting");
           disconnect();
         } catch (IOException e) {
           e.printStackTrace();
@@ -354,8 +357,8 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
       UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
       mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
       mmSocket.connect();
-      mmOutputStream = mmSocket.getOutputStream();
       mmInputStream = mmSocket.getInputStream();
+      mmOutputStream = mmSocket.getOutputStream();
       initializePrinter(mmInputStream, mmOutputStream);
       return true;
     }catch(Exception error){
@@ -377,11 +380,12 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
             try {
               Thread.sleep(50);
             } catch (InterruptedException e) {
+              Log.e("DATECS_PRINTER", e.toString());
             }
             try {
               channel.open();
             } catch (IOException e) {
-
+              Log.e("DATECS_PRINTER", e.toString());
               break;
             }
           }
@@ -389,6 +393,7 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
       }).start();
       mPrinter = new Printer(channel.getInputStream(), channel.getOutputStream());
     } else {
+      Log.i("DATECS_PRINTER", "Protocol is not enabled");
       mPrinter = new Printer(mProtocolAdapter.getRawInputStream(), mProtocolAdapter.getRawOutputStream());
     }
 
@@ -396,6 +401,7 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
 
   public void disconnect() throws IOException{
     try {
+      Log.i("DATECS_PRINTER", "Disconnecting Printer");
       mmSocket.close();
 
       if (mPrinter != null) {
@@ -408,7 +414,7 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
 
 
     } catch (Exception e) {
-
+      Log.e("DATECS_PRINTER", "Failed to disconnect printer");
     }
   }
 

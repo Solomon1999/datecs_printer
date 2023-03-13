@@ -222,7 +222,7 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
         }
         result.success(devices);
       } else{
-        result.error("Error 101", "Error while get list bluetooth device","");
+        result.error("Error 101", "Error while getting list bluetooth device","");
       }
     }else if (call.method.equals("connectBluetooth")){
       String address = call.argument("address");
@@ -231,10 +231,12 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
           isConnect = connect(address);
         }
         result.success(isConnect);
-      }catch(IOException e){
-        result.success(isConnect);
-      }catch(Exception e){
-        result.success(isConnect);
+      }catch(IOException e) {
+        Log.e("DATECS PRITNER", e.toString());
+        result.success(false);
+      }catch(Exception e) {
+        Log.e("DATECS PRITNER", e.toString());
+        result.success(false);
       }
 
     }else if(call.method.equals("disconnectBluetooth")){
@@ -262,7 +264,7 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
             String[] split = args.get(i).split("%20");
             int feed = Integer.parseInt(split[1]);
             mPrinter.feedPaper(feed);
-          }else if(args.get(i).contains("img%2021")){
+          }else if(args.get(i).contains("img%2021")) {
             String[] split = args.get(i).split("%2021");
             double size = Double.parseDouble(split[1]);
             String img = split[2];
@@ -357,6 +359,7 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
       initializePrinter(mmInputStream, mmOutputStream);
       return true;
     }catch(Exception error){
+      Log.e("DATECS_PRINTER", error.toString());
       throw error;
     }
   }

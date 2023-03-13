@@ -2,46 +2,67 @@ import Flutter
 import UIKit
 import PrinterSDK
 
+
 public class SwiftDatecsPrinterPlugin: NSObject, FlutterPlugin {
-    var bluetoothState : PTBluetoothState = PTBluetoothState.unauthorized;
+    var bluetoothState: PTBluetoothState = PTBluetoothState.unauthorized;
     var isConnect: Bool = false;
     var devices: [PTPrinter]  = [];
     var mPrinter: PTDispatcher = PTDispatcher.share();
+//    var mPrinter2: PrinterSDK = PrinterSDK()
 
-    private func connect(address: String) throws -> Bool {
-        mPrinter.connect(devices.first(where: {$0.mac == address}));
-        mPrinter.whenConnectSuccess {}
-        return true
+    private func connect(device: PTPrinter) throws -> Bool {
+            NSLog("Connecting to \(String(describing: device.name))");
+            mPrinter.connect(device);
+            mPrinter.whenConnectSuccess {
+                NSLog("Connected Sucessfully");
+                self.isConnect = true;
+            }
+            mPrinter.whenConnectFailureWithErrorBlock { error in
+                NSLog(String(error.rawValue));
+                self.isConnect = false;
+            }
+            return isConnect;
     }
     
     private func disconnect() throws -> Void {
         mPrinter.disconnect()
     }
 
-    private func sendDataToDevice(data: Data) throws -> Bool {
-        do {
-            if mPrinter.printerConnected == nil {
-                return false
-            }
+    private func sendDataToDevice(data: Data) -> Bool {
+        var status: Bool? = nil;
+//        do {
+//            if mPrinter.printerConnected == nil {
+//                NSLog("Printer is not connected: \(String(describing: mPrinter.printerConnected))")
+//                return false
+//            }
             mPrinter.send(data)
             
-            mPrinter.whenSendProgressUpdate({ (_) in
-                //
+            mPrinter.whenSendProgressUpdate({ progress in
+                NSLog("Sending Progress \(String(describing: progress))");
             })
             
-            mPrinter.whenSendSuccess({(_,_) in
-            })
-            
-            mPrinter.whenSendFailure {
+            mPrinter.whenSendSuccess {a,b in
+                NSLog("Data sent successfully");
+                NSLog(String(describing: a));
+                NSLog(String(describing: b));
+                status = true;
             }
             
-            mPrinter.whenReceiveData({ (_) in
-                
+            mPrinter.whenSendFailure {
+                NSLog("Failed to send data");
+                status = false
+            }
+            
+            mPrinter.whenReceiveData({ (data) in
+                NSLog("Received Data \(String(describing: data))");
             })
+            if (status != true) {
+                return false;
+            }
             return true
-        } catch _ {
-            return false
-        }
+//        } catch {
+//            return false
+//        }
   }
 
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -70,7 +91,11 @@ public class SwiftDatecsPrinterPlugin: NSObject, FlutterPlugin {
             })
             var devicesMapList: [[String:String]] = [];
             for device in devices {
-                devicesMapList.append(["name": device.name, "address": device.mac])
+                devicesMapList.append([
+                    "name": device.name,
+                    "address": device.mac,
+                    "uuid": device.uuid
+                ])
             }
             result(devicesMapList);
         } else {
@@ -78,10 +103,15 @@ public class SwiftDatecsPrinterPlugin: NSObject, FlutterPlugin {
         }
     case "connectBluetooth":
         let arguments: [String:String] = call.arguments as! [String:String]
-        let address: String = String(describing: arguments["address"])
+        let address: String = String(describing: arguments["address"] ?? "")
+        let name: String = String(describing: arguments["name"] ?? "")
+        NSLog("Got Address: \(String(address))")
+        NSLog("Got Device Name: \(String(name))")
         do {
-            if (devices.contains(where: {$0.mac == address})) {
-                isConnect = try connect(address: address)
+            let device: PTPrinter? = devices.first(where: {$0.mac == address || $0.name == name}) ?? nil;
+            NSLog("Got Device: \(String(device?.name ?? "None"))")
+            if (device != nil) {
+                isConnect = try connect(device: device!)
             }
             result(isConnect);
         } catch _ {
@@ -91,28 +121,31 @@ public class SwiftDatecsPrinterPlugin: NSObject, FlutterPlugin {
         do {
             try disconnect();
             result(true)
-        } catch _ {
+        } catch {
+            NSLog("\(error)");
             result(false);
         }
     case "testPrint":
-        do {
+//        do {
             let esc = PTCommandESC.init()
             esc.initializePrinter()
             esc.printSelfTest()
-            let printStatus: Bool = try sendDataToDevice(data: esc.getCommandData())
+            let printStatus: Bool = sendDataToDevice(data: esc.getCommandData())
             result(printStatus)
-        } catch _ {
-            result(false)
-        }
+//        } catch {
+//            NSLog("\(error)");
+//            result(false)
+//        }
     case "printText":
         let arguments: [String:[String]] = call.arguments as! [String:[String]]
         let args: [String] = arguments["args"] ?? []
-        do {
+//        do {
             // Initialise Printer with ESC command
             let esc = PTCommandESC.init()
             esc.initializePrinter()
 
             for arg in args {
+                NSLog(arg);
                 if (arg.contains("feed%20")) {
                     let split: [String] = arg.components(separatedBy: "%20")
                     let feed: Int = Int(split[1]) ?? 1
@@ -208,10 +241,12 @@ public class SwiftDatecsPrinterPlugin: NSObject, FlutterPlugin {
                 }
                 
             }
-            result(try sendDataToDevice(data: esc.getCommandData()))
-        } catch _ {
-            result(false)
-        }
+            NSLog("Command Count: \(String(esc.getCommandData().count))")
+            result(sendDataToDevice(data: esc.getCommandData()))
+//        } catch {
+//            NSLog("\(error)");
+//            result(false)
+//        }
     default:
         result(FlutterMethodNotImplemented)
     }

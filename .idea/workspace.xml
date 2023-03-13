@@ -26,15 +26,63 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e3246d0-faab-446a-be26-36e6ed5206c0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/example/ios/Runner/RunnerProfile.entitlements" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/datecs_printer/DatecsPrinterPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/datecs_printer/DatecsPrinterPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/rezins/datecs_printer/DatecsPrinterPlugin.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/AppFrameworkInfo.plist" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/AppFrameworkInfo.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner/Info.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftDatecsPrinterPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftDatecsPrinterPlugin.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTBitmapManager.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTCommandCPCL.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTCommandCommon.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTCommandESC.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTCommandTSPL.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTCommandZPL.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTDispatcher.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTEncode.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTEnumList.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTLabel.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTLog.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTOldCommandCPCL.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTOldCommandTSPL.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PTPrinter.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/PrinterSDK.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Headers/SDKDefine.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/Modules/module.modulemap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-arm64_armv7/PrinterSDK.framework/PrinterSDK" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTBitmapManager.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTCommandCPCL.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTCommandCommon.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTCommandESC.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTCommandTSPL.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTCommandZPL.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTDispatcher.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTEncode.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTEnumList.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTLabel.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTLog.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTOldCommandCPCL.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTOldCommandTSPL.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PTPrinter.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/PrinterSDK.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Headers/SDKDefine.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/Modules/module.modulemap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/PrinterSDK" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/_CodeSignature/CodeDirectory" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/_CodeSignature/CodeRequirements" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/_CodeSignature/CodeRequirements-1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/_CodeSignature/CodeResources" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/PrinterSDK.xcframework/ios-x86_64-simulator/PrinterSDK.framework/_CodeSignature/CodeSignature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/method/datecs_method.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/method/datecs_method.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

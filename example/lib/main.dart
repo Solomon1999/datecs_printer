@@ -186,8 +186,7 @@ class _MyAppState extends State<MyApp> {
       });
     } catch (error) {
       if (error is PlatformException) {
-        Fluttertoast.showToast(
-            msg: error.toString());
+        Fluttertoast.showToast(msg: error.toString());
       }
     }
   }
@@ -266,17 +265,18 @@ class _MyAppState extends State<MyApp> {
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    foregroundColor: Colors.white
-                  ),
+                      backgroundColor: Theme.of(context).primaryColor,
+                      foregroundColor: Colors.white),
                   onPressed: () async {
                     if (_device == null) {
                       Fluttertoast.showToast(msg: "Device not selected");
                       return;
                     }
                     try {
+                      print(
+                          "Connecting to device ${_device?.name} with address: ${_device?.address} ");
                       var result = await DatecsPrinter.connectBluetooth(
-                          _device!.address);
+                          _device!.address, _device!.name);
                       if (result) {
                         Fluttertoast.showToast(msg: "Device connected");
                       }

@@ -17,10 +17,10 @@ class DatecsPrinter {
     return list;
   }
 
-  static Future<bool> connectBluetooth(String address) async {
+  static Future<bool> connectBluetooth(String address, String name) async {
     try {
-      var value =
-          await _channel.invokeMethod('connectBluetooth', {"address": address});
+      var value = await _channel
+          .invokeMethod('connectBluetooth', {"address": address, "name": name});
       print(value);
       final bool result = value;
       return result;

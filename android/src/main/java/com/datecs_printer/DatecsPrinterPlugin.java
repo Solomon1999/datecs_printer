@@ -69,42 +69,45 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
 
 //    @Override
 //    public void onBatteryStateChanged(boolean b) {
-//
+//      Log.i("DATECS_PRITNER", "Battery State Changed");
 //    }
 //
 //    @Override
 //    public void onThermalHeadStateChanged(boolean b) {
-//
+//      Log.i("DATECS_PRITNER", "Thermal head State changed");
 //    }
 //
 //    @Override
 //    public void onPaperStateChanged(boolean b) {
-//
+//      Log.i("DATECS_PRITNER", "Paper State Changed");
 //    }
 
     @Override
     public void onReadEncryptedCard() {
-      // TODO: onReadEncryptedCard
+      Log.i("DATECS_PRITNER", "Read Encrypted Card");
     }
 
     @Override
     public void onReadCard() {
       // TODO: onReadCard
+      Log.i("DATECS_PRITNER", "Reading Card");
     }
 
     @Override
     public void onReadBarcode() {
       // TODO: onReadBarcode
+      Log.i("DATECS_PRITNER", "Reading bar Code");
+
     }
 
     @Override
     public void onLowBattery(boolean b) {
-
+      Log.i("DATECS_PRITNER", "Printer Battery is low");
     }
 
     @Override
     public void onOverHeated(boolean b) {
-
+      Log.i("DATECS_PRITNER", "Overheated pelase chill");
     }
 
     @Override
@@ -113,8 +116,8 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
         Log.i("DATECS_PRINTER", "Checking on paper ready");
 
       } else {
+        Log.i("DATECS_PRINTER", "On paper ready failed disconnecting");
         try {
-          Log.e("DATECS_PRINTER", "On paper ready failed disconnecting");
           disconnect();
         } catch (IOException e) {
           e.printStackTrace();

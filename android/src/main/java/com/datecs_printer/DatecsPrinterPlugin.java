@@ -233,7 +233,7 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
     }
     else if (call.method.equals("connectionState")) {
       try {
-        Boolean hasConnectedParameters = (mmDevice != null || mPrinter != null || mmSocket.isConnected());
+        Boolean hasConnectedParameters = (mmDevice != null || mPrinter != null || (mmSocket != null && mmSocket.isConnected()));
         if (hasConnectedParameters) {
           result.success(true);
         } else {

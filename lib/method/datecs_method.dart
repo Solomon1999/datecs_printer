@@ -29,6 +29,18 @@ class DatecsPrinter {
     }
   }
 
+  static Future<bool> checkConnectionState() async {
+    try {
+      var value = await _channel
+          .invokeMethod('connectionState');
+      print(value);
+      final bool result = value;
+      return result;
+    } catch (e) {
+      return false;
+    }
+  }
+
   static Future<void> get printTest async {
     final bool result = await _channel.invokeMethod('testPrint');
     return Future.value();

@@ -227,7 +227,21 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
       } else{
         result.error("Error 101", "Error while getting list bluetooth device","");
       }
-    }else if (call.method.equals("connectBluetooth")){
+    }
+    else if (call.method.equals("connectionState")) {
+      try {
+        if (mmDevice != null || mPrinter != null || mmSocket.isConnected()) {
+          result.success(true);
+        } else {
+          result.success(false);
+        }
+      } catch(Exception e) {
+        Log.e("DATECS_PRINTER", e.toString());
+        result.success(false);
+      }
+    }
+
+    else if (call.method.equals("connectBluetooth")){
       String address = call.argument("address");
       try{
         if (BluetoothAdapter.checkBluetoothAddress(address)) {

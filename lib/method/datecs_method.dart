@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:datecs_printer/method/datecs_device.dart';
 import 'package:flutter/services.dart';
 
 class DatecsPrinter {
@@ -31,13 +32,27 @@ class DatecsPrinter {
 
   static Future<bool> checkConnectionState() async {
     try {
-      var value = await _channel
-          .invokeMethod('connectionState');
+      var value = await _channel.invokeMethod('connectionState');
       print(value);
       final bool result = value;
       return result;
     } catch (e) {
       return false;
+    }
+  }
+
+  static Future<DatecsDevice?> getConnectedDevice() async {
+    DatecsDevice? device;
+    try {
+      Map<String, dynamic>? value =
+          await _channel.invokeMethod('getConnectedDevice');
+      print(value);
+      if (value != null) {
+        device = DatecsDevice.fromMap(value);
+      }
+      return device;
+    } catch (e) {
+      throw Exception("Failed to get connected device");
     }
   }
 

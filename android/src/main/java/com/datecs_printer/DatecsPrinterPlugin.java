@@ -233,7 +233,8 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
     }
     else if (call.method.equals("connectionState")) {
       try {
-        if (mmDevice != null || mPrinter != null || mmSocket.isConnected()) {
+        Boolean hasConnectedParameters = (mmDevice != null || mPrinter != null || mmSocket.isConnected());
+        if (hasConnectedParameters) {
           result.success(true);
         } else {
           result.success(false);
@@ -241,6 +242,23 @@ public class DatecsPrinterPlugin implements FlutterPlugin, MethodCallHandler, Ac
       } catch(Exception e) {
         Log.e("DATECS_PRINTER", e.toString());
         result.success(false);
+      }
+    }
+    else if (call.method.equals("getConnectedDevice")) {
+      try {
+        Boolean hasConnectedParameters = (mmDevice != null);
+        if (hasConnectedParameters) {
+          Map<String, Object> device = new HashMap<String, Object>();
+          device.put("name", mmDevice.getName());
+          device.put("address", mmDevice.getAddress());
+          device.put("isConnected", mmSocket.isConnected());
+          result.success(device);
+        } else {
+          result.success(null);
+        }
+      } catch(Exception e) {
+        Log.e("DATECS_PRINTER", e.toString());
+        result.success(null);
       }
     }
 

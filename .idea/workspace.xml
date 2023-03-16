@@ -27,11 +27,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e3246d0-faab-446a-be26-36e6ed5206c0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/datecs_printer/DatecsPrinterPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/datecs_printer/DatecsPrinterPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/method/datecs_method.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/method/datecs_method.dart" afterDir="false" />
-    </list>
+    <list default="true" id="6ddabf8b-173c-4301-8524-6e99f50e8a6c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
